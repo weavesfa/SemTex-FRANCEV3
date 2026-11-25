@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemtexFrance | Serveur Arma Reforger FR • PC / XBOX / PS</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts : Rajdhani (Titres militaires), Inter (Corps), JetBrains Mono (Données) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome pour les icônes tactiques et plateformes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Rajdhani', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        tactical: {
+                            bg: '#090b0f',
+                            surface: '#11151c',
+                            card: '#161b24',
+                            border: '#1e2633',
+                            olive: '#3d5a45',
+                            oliveLight: '#5a8266',
+                            amber: '#e08b1b',
+                            amberHover: '#f59e0b',
+                            cyan: '#38bdf8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-tactical-bg text-gray-200 font-sans antialiased min-h-screen flex flex-col selection:bg-tactical-amber selection:text-black">
+
+    <!-- ===================================================================== -->
+    <!-- BARRE SUPÉRIEURE : RECHERCHE EN JEU & CROSSPLAY                       -->
+    <!-- ===================================================================== -->
+    <div class="bg-tactical-surface border-b border-tactical-border py-2 px-4 text-xs sm:text-sm">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3 flex-wrap">
+                <span class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-tactical-olive/30 border border-tactical-oliveLight/40 text-tactical-oliveLight font-mono font-semibold text-xs">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>SERVEUR FR • CROSSPLAY</span>
+                </span>
+
+                <div class="hidden lg:flex items-center gap-2 bg-black/50 border border-tactical-border rounded-lg px-3 py-1 font-mono text-xs text-gray-300">
+                    <span class="text-tactical-amber font-bold truncate max-w-md" id="top-server-name-display">[FR] SemtexFrance / communauté ex OpexFrance / PC XBOX PS</span>
+                    <button onclick="copyServerName()" title="Copier le nom exact du serveur" class="ml-1.5 text-gray-400 hover:text-white transition-colors focus:outline-none cursor-pointer">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <!-- Badges Crossplay PC / XBOX / PS -->
+                <div class="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-gray-400 bg-black/40 border border-tactical-border px-2.5 py-1 rounded-lg">
+                    <span class="text-gray-200"><i class="fa-solid fa-desktop text-tactical-cyan mr-1"></i>PC</span>
+                    <span>•</span>
+                    <span class="text-gray-200"><i class="fa-brands fa-xbox text-emerald-400 mr-1"></i>XBOX</span>
+                    <span>•</span>
+                    <span class="text-gray-200"><i class="fa-brands fa-playstation text-blue-400 mr-1"></i>PS5</span>
+                </div>
+
+                <a id="top-discord-btn" href="https://discord.gg/YdpE2wCnaK" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-[#5865F2]/20 hover:bg-[#5865F2]/30 text-[#8ea1e1] border border-[#5865F2]/40 px-3 py-1 rounded-lg text-xs font-semibold transition-all">
+                    <i class="fa-brands fa-discord"></i>
+                    <span>Discord</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- EN-TÊTE & NAVIGATION PAR ONGLETS                                      -->
+    <!-- ===================================================================== -->
+    <header class="sticky top-0 z-40 bg-tactical-bg/95 backdrop-blur-md border-b border-tactical-border shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between py-3 gap-3">
+                
+                <!-- Identité / Logo SemtexFrance -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('status')">
+                        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-tactical-olive to-tactical-surface border border-tactical-oliveLight/50 flex items-center justify-center shadow-inner">
+                            <i class="fa-solid fa-crosshairs text-tactical-amber text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h1 class="font-display font-extrabold text-xl sm:text-2xl tracking-wider text-white uppercase leading-none">
+                                    SEMTEX<span class="text-tactical-amber">FRANCE</span>
+                                </h1>
+                                <span class="px-2 py-0.5 rounded bg-tactical-surface border border-tactical-border text-[10px] font-mono text-gray-400 uppercase">
+                                    ex OpexFrance
+                                </span>
+                            </div>
+                            <p class="text-[11px] font-mono text-tactical-oliveLight tracking-widest uppercase mt-0.5">
+                                ARMA REFORGER • CROSSPLAY PC / XBOX / PS
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation principale par onglets -->
+                <nav class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar" aria-label="Onglets principaux">
+                    <button onclick="switchTab('status')" id="tab-btn-status" class="tab-btn active flex items-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-sm sm:text-base tracking-wide uppercase transition-all whitespace-nowrap bg-tactical-amber text-black shadow-md shadow-tactical-amber/20 cursor-pointer">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Accueil</span>
+                    </button>
+
+                    <button onclick="switchTab('mods')" id="tab-btn-mods" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-sm sm:text-base tracking-wide uppercase transition-all whitespace-nowrap bg-tactical-card text-gray-300 hover:bg-tactical-surface hover:text-white border border-tactical-border cursor-pointer">
+                        <i class="fa-solid fa-cubes"></i>
+                        <span>Modpack</span>
+                        <span id="nav-mods-badge" class="ml-0.5 px-1.5 py-0.2 text-xs font-mono rounded-md bg-black/50 text-tactical-amber">49</span>
+                    </button>
+
+                    <button onclick="switchTab('staff')" id="tab-btn-staff" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-sm sm:text-base tracking-wide uppercase transition-all whitespace-nowrap bg-tactical-card text-gray-300 hover:bg-tactical-surface hover:text-white border border-tactical-border cursor-pointer">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Équipe Staff</span>
+                    </button>
+
+                    <button onclick="switchTab('recruitment')" id="tab-btn-recruitment" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-sm sm:text-base tracking-wide uppercase transition-all whitespace-nowrap bg-tactical-card text-gray-300 hover:bg-tactical-surface hover:text-white border border-tactical-border cursor-pointer">
+                        <i class="fa-solid fa-file-signature text-emerald-400"></i>
+                        <span>Recrutement</span>
+                    </button>
+
+                    <button onclick="switchTab('reviews')" id="tab-btn-reviews" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-sm sm:text-base tracking-wide uppercase transition-all whitespace-nowrap bg-tactical-card text-gray-300 hover:bg-tactical-surface hover:text-white border border-tactical-border cursor-pointer">
+                        <i class="fa-solid fa-star text-tactical-amber"></i>
+                        <span>Avis</span>
+                        <span id="nav-reviews-badge" class="ml-0.5 px-1.5 py-0.2 text-xs font-mono rounded-md bg-black/50 text-tactical-amber">3</span>
+                    </button>
+
+                    <button onclick="switchTab('donate')" id="tab-btn-donate" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-display font-bold text-sm sm:text-base tracking-wide uppercase transition-all whitespace-nowrap bg-tactical-card text-gray-300 hover:bg-tactical-surface hover:text-white border border-tactical-border cursor-pointer">
+                        <i class="fa-brands fa-paypal text-[#3b9ae1]"></i>
+                        <span>Donation PayPal</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- CONTENU PRINCIPAL (ONGLETS DYNAMIQUES)                                -->
+    <!-- ===================================================================== -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+
+        <!-- ================================================================= -->
+        <!-- ONGLET 1 : ACCUEIL & RECHERCHE DU SERVEUR                         -->
+        <!-- ================================================================= -->
+        <section id="tab-content-status" class="tab-section space-y-8">
+            
+            <!-- Bannière Principale : Connexion par Nom Exact -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-tactical-card via-tactical-surface to-black border border-tactical-border rounded-2xl p-6 sm:p-10 shadow-2xl">
+                <div class="absolute -right-16 -top-16 w-72 h-72 bg-tactical-olive/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-16 -bottom-16 w-72 h-72 bg-tactical-amber/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-4xl space-y-5">
+                    <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-tactical-olive/25 border border-tactical-oliveLight/40 text-tactical-oliveLight text-xs font-mono uppercase tracking-wider">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Serveur MilSim Tactique FR • Crossplay Actif</span>
+                    </div>
+
+                    <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase tracking-tight leading-tight">
+                        Rejoignez le front sur <span class="text-tactical-amber">SemtexFrance</span>
+                    </h2>
+
+                    <p class="text-gray-400 text-sm sm:text-base max-w-2xl leading-relaxed">
+                        Communauté <strong class="text-gray-200">ex OpexFrance</strong>. Affrontements tactiques modernes ouverts aux joueurs <strong class="text-gray-200">PC, Xbox Series X|S et PlayStation 5</strong> sur la carte <strong class="text-gray-200">Novka</strong>.
+                    </p>
+
+                    <!-- Bloc Recherche en Jeu -->
+                    <div class="pt-2">
+                        <div class="text-[11px] font-mono text-gray-400 uppercase mb-1.5">
+                            <i class="fa-solid fa-magnifying-glass text-tactical-amber mr-1.5"></i>Rechercher dans le navigateur multijoueur en jeu :
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                            <div class="flex items-center justify-between bg-black/80 border border-tactical-border rounded-xl px-4 py-3.5 font-mono text-xs sm:text-sm flex-grow min-w-0">
+                                <span class="text-white font-bold select-all truncate" id="hero-server-name">[FR] SemtexFrance | PC XBOX PS</span>
+                            </div>
+
+                            <button onclick="copyServerName()" class="bg-tactical-amber hover:bg-tactical-amberHover text-black font-display font-bold uppercase tracking-wider px-6 py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-tactical-amber/20 active:scale-95 shrink-0 cursor-pointer">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copier le nom</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cartes Plateformes Crossplay -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-tactical-card border border-tactical-border rounded-2xl p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-sky-950/70 border border-sky-500/30 flex items-center justify-center text-tactical-cyan text-xl shrink-0">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-white uppercase">PC (Steam)</h3>
+                        <p class="text-xs text-gray-400">Téléchargement automatique des 49 mods à la connexion.</p>
+                    </div>
+                </div>
+
+                <div class="bg-tactical-card border border-tactical-border rounded-2xl p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-950/70 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl shrink-0">
+                        <i class="fa-brands fa-xbox"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-white uppercase">Xbox Series X|S</h3>
+                        <p class="text-xs text-gray-400">Crossplay natif activé. Recherchez <span class="text-gray-200 font-mono">SemtexFrance</span>.</p>
+                    </div>
+                </div>
+
+                <div class="bg-tactical-card border border-tactical-border rounded-2xl p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-950/70 border border-blue-500/30 flex items-center justify-center text-blue-400 text-xl shrink-0">
+                        <i class="fa-brands fa-playstation"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-white uppercase">PlayStation 5</h3>
+                        <p class="text-xs text-gray-400">Compatible PS5 Crossplay. Recherchez <span class="text-gray-200 font-mono">SemtexFrance</span>.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- ONGLET 2 : LISTE DES MODS DU SERVEUR (49 MODS + STOCKAGE)         -->
+        <!-- ================================================================= -->
+        <section id="tab-content-mods" class="tab-section hidden space-y-6">
+            
+            <!-- En-tête de l'onglet Mods -->
+            <div class="bg-tactical-card border border-tactical-border rounded-2xl p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div class="space-y-2">
+                    <div class="inline-flex items-center gap-2 text-xs font-mono text-tactical-amber uppercase">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Workshop Arma Reforger • Compatible PC / Xbox Series X|S / PS5</span>
+                    </div>
+                    <h2 class="font-display font-extrabold text-3xl text-white uppercase">Modpack Officiel SemtexFrance (49 Mods)</h2>
+                    <p class="text-sm text-gray-400 max-w-2xl">
+                        Liste complète et exacte des 49 mods actifs sur le serveur. Tous se téléchargent automatiquement lors de votre première connexion en jeu.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="bg-black/60 border border-tactical-border rounded-xl px-4 py-2.5 text-center">
+                        <div class="text-[11px] font-mono text-gray-400 uppercase">Mods Actifs</div>
+                        <div id="mods-total-count" class="font-mono text-xl font-bold text-white">49</div>
+                    </div>
+                    <div class="bg-black/60 border border-tactical-amber/40 rounded-xl px-4 py-2.5 text-center">
+                        <div class="text-[11px] font-mono text-tactical-amber uppercase">Espace Suggéré</div>
+                        <div class="font-mono text-xl font-bold text-white">~20 Go</div>
+                    </div>
+                    <button onclick="copyModsJson()" class="bg-tactical-olive hover:bg-tactical-oliveLight text-white font-display font-bold uppercase tracking-wider px-4 py-3 rounded-xl transition-all flex items-center gap-2 text-sm cursor-pointer">
+                        <i class="fa-solid fa-file-code"></i>
+                        <span>Copier JSON (49 mods)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Barre de recherche et filtres par catégorie -->
+            <div class="flex flex-col xl:flex-row gap-4 justify-between items-stretch xl:items-center">
+                <div class="relative flex-grow max-w-md">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                    <input type="text" id="mod-search-input" oninput="renderMods()" placeholder="Rechercher par nom ou Mod ID (ex: WCS, Novka, 595F2BF2...)" class="w-full bg-tactical-card border border-tactical-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none">
+                </div>
+
+                <div class="flex flex-wrap gap-2" id="mod-category-filters">
+                    <button onclick="setModCategory('ALL')" data-cat="ALL" class="mod-cat-btn active px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-amber text-black transition-all cursor-pointer">Tous (49)</button>
+                    <button onclick="setModCategory('Core & Terrain')" data-cat="Core & Terrain" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Core & Terrain</button>
+                    <button onclick="setModCategory('Armes & WCS')" data-cat="Armes & WCS" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Armes & WCS</button>
+                    <button onclick="setModCategory('Véhicules & Artillerie')" data-cat="Véhicules & Artillerie" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Véhicules & Artillerie</button>
+                    <button onclick="setModCategory('Tenues & Équipements')" data-cat="Tenues & Équipements" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Tenues & Équipements</button>
+                    <button onclick="setModCategory('Scripts & UI')" data-cat="Scripts & UI" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Scripts & UI</button>
+                </div>
+            </div>
+
+            <!-- Grille des 49 Mods -->
+            <div id="mods-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Généré dynamiquement par JS -->
+            </div>
+
+            <!-- Encart Bas de Page : Espace de Stockage Suggéré -->
+            <div class="bg-gradient-to-br from-tactical-card via-tactical-surface to-black border border-tactical-amber/40 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-tactical-border pb-5">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-tactical-amber/15 border border-tactical-amber/40 flex items-center justify-center shrink-0 text-tactical-amber">
+                            <i class="fa-solid fa-hard-drive text-2xl"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs font-mono text-tactical-amber uppercase tracking-wider">Prérequis Disque & Console</div>
+                            <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white uppercase">Espace de Stockage Suggéré</h3>
+                            <p class="text-sm text-gray-400 mt-1">
+                                Estimation calculée sur l'ensemble des <strong class="text-gray-200">49 mods actifs</strong> du serveur SemtexFrance.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 shrink-0">
+                        <div class="bg-black/70 border border-tactical-border rounded-xl px-4 py-3 text-center">
+                            <div class="text-[11px] font-mono text-gray-400 uppercase">Poids Modpack</div>
+                            <div class="font-mono text-lg sm:text-xl font-bold text-gray-200">~13,0 – 16,4 Go</div>
+                        </div>
+                        <div class="bg-tactical-amber/15 border border-tactical-amber/60 rounded-xl px-5 py-3 text-center">
+                            <div class="text-[11px] font-mono text-tactical-amber uppercase font-bold">Espace Recommandé</div>
+                            <div class="font-mono text-xl sm:text-2xl font-extrabold text-white">20 Go libres</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Détail par bloc du modpack -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-black/50 border border-tactical-border rounded-xl p-4 space-y-1">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="text-tactical-oliveLight font-bold uppercase">Core RHS</span>
+                            <span class="text-white font-bold">~6,5 – 7,5 Go</span>
+                        </div>
+                        <p class="text-xs text-gray-400">RHS - Status Quo, Content Pack 01 & Content Pack 02.</p>
+                    </div>
+
+                    <div class="bg-black/50 border border-tactical-border rounded-xl p-4 space-y-1">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="text-tactical-cyan font-bold uppercase">Terrain / Carte</span>
+                            <span class="text-white font-bold">~1,5 – 2,2 Go</span>
+                        </div>
+                        <p class="text-xs text-gray-400">Carte Novka et environnement de théâtre d'opérations.</p>
+                    </div>
+
+                    <div class="bg-black/50 border border-tactical-border rounded-xl p-4 space-y-1">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="text-tactical-amber font-bold uppercase">Écosystème WCS</span>
+                            <span class="text-white font-bold">~3,5 – 4,5 Go</span>
+                        </div>
+                        <p class="text-xs text-gray-400">22 modules WCS (Armes, Viseurs, Tenues, NATO/RU, Sons).</p>
+                    </div>
+
+                    <div class="bg-black/50 border border-tactical-border rounded-xl p-4 space-y-1">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="text-emerald-400 font-bold uppercase">Véhicules & Scripts</span>
+                            <span class="text-white font-bold">~1,5 – 2,2 Go</span>
+                        </div>
+                        <p class="text-xs text-gray-400">VT4-FRM, M777, ZU-23-2, Coalition UI, vPad, ArmaReplay, etc.</p>
+                    </div>
+                </div>
+
+                <div class="bg-tactical-bg/90 border border-tactical-border rounded-xl p-4 flex items-start gap-3 text-xs text-gray-300 leading-relaxed">
+                    <i class="fa-solid fa-circle-info text-tactical-cyan text-base mt-0.5 shrink-0"></i>
+                    <div>
+                        <strong class="text-white">Conseil spécial joueurs Xbox Series X|S & PlayStation 5 :</strong> Sur console, l'espace réservé aux mods d'Arma Reforger est limité à environ 20-25 Go au total. Nous vous conseillons de libérer <strong class="text-tactical-amber">20 Go d'espace libre</strong> (en supprimant les mods inutilisés d'autres serveurs) afin d'installer les 49 mods sans erreur et d'anticiper les futures mises à jour RHS/WCS.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- ONGLET 2 : LISTE DES MODS DU SERVEUR                              -->
+        <!-- ================================================================= -->
+        <section id="tab-content-mods" class="tab-section hidden space-y-6">
+            
+            <!-- En-tête de l'onglet Mods -->
+            <div class="bg-tactical-card border border-tactical-border rounded-2xl p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div class="space-y-2">
+                    <div class="inline-flex items-center gap-2 text-xs font-mono text-tactical-amber uppercase">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Workshop Arma Reforger • Compatible PC / Xbox / PS5</span>
+                    </div>
+                    <h2 class="font-display font-extrabold text-3xl text-white uppercase">Modpack Officiel SemtexFrance</h2>
+                    <p class="text-sm text-gray-400 max-w-2xl">
+                        Tous les mods ci-dessous se téléchargent et se mettent à jour automatiquement lors de votre connexion au serveur en jeu.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="bg-black/60 border border-tactical-border rounded-xl px-4 py-2.5 text-center">
+                        <div class="text-[11px] font-mono text-gray-400 uppercase">Total Mods</div>
+                        <div id="mods-total-count" class="font-mono text-xl font-bold text-white">12</div>
+                    </div>
+                    <button onclick="toggleAddModModal()" class="bg-tactical-olive hover:bg-tactical-oliveLight text-white font-display font-bold uppercase tracking-wider px-4 py-3 rounded-xl transition-all flex items-center gap-2 text-sm cursor-pointer">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Ajouter un Mod</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Formulaire rapide d'ajout de mod -->
+            <div id="add-mod-panel" class="hidden bg-tactical-surface border border-tactical-amber/50 rounded-2xl p-6 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-display font-bold text-lg text-tactical-amber uppercase"><i class="fa-solid fa-wrench mr-2"></i>Ajouter un mod au catalogue</h3>
+                    <button onclick="toggleAddModModal()" class="text-gray-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <form onsubmit="handleAddMod(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                    <input type="text" id="new-mod-name" required placeholder="Nom du mod (ex: WCS_Arsenal)" class="lg:col-span-2 bg-black border border-tactical-border rounded-xl px-3.5 py-2.5 text-sm text-white focus:border-tactical-amber focus:outline-none">
+                    <select id="new-mod-category" class="bg-black border border-tactical-border rounded-xl px-3.5 py-2.5 text-sm text-white focus:border-tactical-amber focus:outline-none">
+                        <option value="Armement">Armement</option>
+                        <option value="Véhicules">Véhicules</option>
+                        <option value="Équipement">Équipement</option>
+                        <option value="Tactique & UI">Tactique & UI</option>
+                        <option value="Administration">Administration</option>
+                    </select>
+                    <input type="text" id="new-mod-size" required placeholder="Taille (ex: 320 Mo)" class="bg-black border border-tactical-border rounded-xl px-3.5 py-2.5 text-sm text-white font-mono focus:border-tactical-amber focus:outline-none">
+                    <button type="submit" class="bg-tactical-amber hover:bg-tactical-amberHover text-black font-display font-bold uppercase rounded-xl px-4 py-2.5 text-sm transition-all cursor-pointer">
+                        Enregistrer
+                    </button>
+                </form>
+            </div>
+
+            <!-- Barre de recherche et filtres par catégorie -->
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
+                <div class="relative flex-grow max-w-md">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                    <input type="text" id="mod-search-input" oninput="renderMods()" placeholder="Rechercher un mod par nom..." class="w-full bg-tactical-card border border-tactical-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none">
+                </div>
+
+                <div class="flex flex-wrap gap-2" id="mod-category-filters">
+                    <button onclick="setModCategory('ALL')" data-cat="ALL" class="mod-cat-btn active px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-amber text-black transition-all cursor-pointer">Tous</button>
+                    <button onclick="setModCategory('Armement')" data-cat="Armement" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Armement</button>
+                    <button onclick="setModCategory('Véhicules')" data-cat="Véhicules" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Véhicules</button>
+                    <button onclick="setModCategory('Équipement')" data-cat="Équipement" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Équipement</button>
+                    <button onclick="setModCategory('Tactique & UI')" data-cat="Tactique & UI" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Tactique & UI</button>
+                    <button onclick="setModCategory('Administration')" data-cat="Administration" class="mod-cat-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold uppercase bg-tactical-card text-gray-300 border border-tactical-border hover:text-white transition-all cursor-pointer">Administration</button>
+                    <div class="bg-tactical-bg/90 border border-tactical-border rounded-xl p-4 flex items-start gap-3 text-xs text-gray-300 leading-relaxed">
+                    <i class="fa-solid fa-circle-info text-tactical-cyan text-base mt-0.5 shrink-0"></i>
+                    <div>
+                        <strong class="text-white">Conseil spécial joueurs Xbox Series X|S & PlayStation 5 :</strong> Sur console, l'espace réservé aux mods d'Arma Reforger est limité à environ 20-25 Go au total. Nous vous conseillons de libérer <strong class="text-tactical-amber">20 Go d'espace libre</strong> (en supprimant les mods inutilisés d'autres serveurs) afin d'installer les 49 mods sans erreur et d'anticiper les futures mises à jour RHS/WCS.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- ONGLET 3 : ÉQUIPE STAFF (Hiérarchie exacte demandée)              -->
+        <!-- ================================================================= -->
+        <section id="tab-content-staff" class="tab-section hidden space-y-10">
+            
+            <!-- En-tête Staff -->
+            <div class="bg-tactical-card border border-tactical-border rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-xs font-mono text-tactical-amber uppercase mb-1">
+                        <i class="fa-solid fa-star"></i>
+                        <span>Chaîne de Commandement SemtexFrance</span>
+                    </div>
+                    <h2 class="font-display font-extrabold text-3xl text-white uppercase">Équipe d'Administration & Staff</h2>
+                    <p class="text-sm text-gray-400 mt-1">Les responsables du serveur SemtexFrance (ex OpexFrance) et les postes actuellement ouverts.</p>
+                </div>
+                <a href="https://discord.gg/votre-lien-discord" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-[#5865F2] hover:bg-[#4752c4] text-white font-display font-bold uppercase tracking-wider px-5 py-3 rounded-xl text-sm transition-all shadow-lg">
+                    <i class="fa-brands fa-discord text-lg"></i>
+                    <span>Rejoindre le Discord</span>
+                </a>
+            </div>
+
+            <!-- 1. FONDATEURS (x2) -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 border-b border-tactical-border pb-2">
+                    <span class="px-2.5 py-1 rounded-lg bg-red-950/80 border border-red-500/40 text-red-400 font-mono text-xs font-bold uppercase">Commandement Suprême</span>
+                    <h3 class="font-display font-bold text-2xl text-white uppercase">Fondateurs <span class="text-gray-500 text-lg font-mono">(2)</span></h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Fondateur #1 -->
+                    <div class="bg-tactical-card border border-red-500/30 rounded-2xl p-6 flex items-center gap-5 relative overflow-hidden group hover:border-red-500/60 transition-all">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-900/60 to-black border border-red-500/40 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-crown text-red-400 text-2xl"></i>
+                        </div>
+                        <div class="space-y-1 flex-grow">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-mono uppercase tracking-wider text-red-400 font-bold">Fondateur #1</span>
+                                <span class="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> En ligne
+                                </span>
+                            </div>
+                            <h4 class="font-display font-extrabold text-2xl text-white tracking-wide">Fondateur 1</h4>
+                            <p class="text-xs text-gray-400">Gestion globale, Infrastructure dédiée & Direction SemtexFrance</p>
+                            <div class="pt-1 font-mono text-xs text-gray-500"><i class="fa-brands fa-discord mr-1 text-gray-400"></i>@astro_booys</div>
+                        </div>
+                    </div>
+
+                    <!-- Fondateur #2 -->
+                    <div class="bg-tactical-card border border-red-500/30 rounded-2xl p-6 flex items-center gap-5 relative overflow-hidden group hover:border-red-500/60 transition-all">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-900/60 to-black border border-red-500/40 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-crown text-red-400 text-2xl"></i>
+                        </div>
+                        <div class="space-y-1 flex-grow">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-mono uppercase tracking-wider text-red-400 font-bold">Fondateur #2</span>
+                                <span class="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> En ligne
+                                </span>
+                            </div>
+                            <h4 class="font-display font-extrabold text-2xl text-white tracking-wide">Fondateur 2</h4>
+                            <p class="text-xs text-gray-400">Configuration serveur, Modpack Crossplay & Direction communautaire</p>
+                            <div class="pt-1 font-mono text-xs text-gray-500"><i class="fa-brands fa-discord mr-1 text-gray-400"></i>@hoka</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. CO-FONDATEUR (x1) -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 border-b border-tactical-border pb-2">
+                    <span class="px-2.5 py-1 rounded-lg bg-amber-950/80 border border-tactical-amber/40 text-tactical-amber font-mono text-xs font-bold uppercase">État-Major</span>
+                    <h3 class="font-display font-bold text-2xl text-white uppercase">Co-Fondateur <span class="text-gray-500 text-lg font-mono">(1)</span></h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Co-Fondateur #1 -->
+                    <div class="bg-tactical-card border border-tactical-amber/30 rounded-2xl p-6 flex items-center gap-5 hover:border-tactical-amber/60 transition-all">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-900/50 to-black border border-tactical-amber/40 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-star-half-stroke text-tactical-amber text-2xl"></i>
+                        </div>
+                        <div class="space-y-1 flex-grow">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-mono uppercase tracking-wider text-tactical-amber font-bold">Co-Fondateur</span>
+                                <span class="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> En ligne
+                                </span>
+                            </div>
+                            <h4 class="font-display font-extrabold text-2xl text-white tracking-wide">Co-Fondateur 1</h4>
+                            <p class="text-xs text-gray-400">Supervision de l'équipe Staff, Événements & Partenariats</p>
+                            <div class="pt-1 font-mono text-xs text-gray-500"><i class="fa-brands fa-discord mr-1 text-gray-400"></i>@AdWolf</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. ADMINISTRATEURS (x2) -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 border-b border-tactical-border pb-2">
+                    <span class="px-2.5 py-1 rounded-lg bg-tactical-olive/30 border border-tactical-oliveLight/40 text-tactical-oliveLight font-mono text-xs font-bold uppercase">Officiers</span>
+                    <h3 class="font-display font-bold text-2xl text-white uppercase">Administrateurs <span class="text-gray-500 text-lg font-mono">(2)</span></h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Administrateur #1 -->
+                    <div class="bg-tactical-card border border-tactical-border rounded-2xl p-6 flex items-center gap-5 hover:border-tactical-oliveLight/60 transition-all">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-tactical-olive/40 to-black border border-tactical-oliveLight/40 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-user-shield text-tactical-oliveLight text-2xl"></i>
+                        </div>
+                        <div class="space-y-1 flex-grow">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-mono uppercase tracking-wider text-tactical-oliveLight font-bold">Administrateur #1</span>
+                                <span class="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Actif
+                                </span>
+                            </div>
+                            <h4 class="font-display font-extrabold text-2xl text-white tracking-wide">Administrateur 1</h4>
+                            <p class="text-xs text-gray-400">Administration en jeu, Gestion des litiges & Game Master</p>
+                            <div class="pt-1 font-mono text-xs text-gray-500"><i class="fa-brands fa-discord mr-1 text-gray-400"></i>@admin1</div>
+                        </div>
+                    </div>
+
+                    <!-- Administrateur #2 -->
+                    <div class="bg-tactical-card border border-tactical-border rounded-2xl p-6 flex items-center gap-5 hover:border-tactical-oliveLight/60 transition-all">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-tactical-olive/40 to-black border border-tactical-oliveLight/40 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-user-shield text-tactical-oliveLight text-2xl"></i>
+                        </div>
+                        <div class="space-y-1 flex-grow">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-mono uppercase tracking-wider text-tactical-oliveLight font-bold">Administrateur #2</span>
+                                <span class="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Actif
+                                </span>
+                            </div>
+                            <h4 class="font-display font-extrabold text-2xl text-white tracking-wide">Administrateur 2</h4>
+                            <p class="text-xs text-gray-400">Administration en jeu, Surveillance anti-triche & Support</p>
+                            <div class="pt-1 font-mono text-xs text-gray-500"><i class="fa-brands fa-discord mr-1 text-gray-400"></i>@admin2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 & 5. MODÉRATEURS (VIDE) & HELPEURS (VIDE) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- MODÉRATEURS (VIDE) -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-tactical-border pb-2">
+                        <h3 class="font-display font-bold text-2xl text-white uppercase">Modérateurs <span class="text-gray-500 text-lg font-mono">(VIDE)</span></h3>
+                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-400 font-mono text-xs">Recrutement Ouvert</span>
+                    </div>
+
+                    <div class="bg-tactical-surface/70 border-2 border-dashed border-tactical-border rounded-2xl p-8 text-center space-y-4">
+                        <div class="w-14 h-14 rounded-2xl bg-black/60 border border-tactical-border mx-auto flex items-center justify-center text-gray-500">
+                            <i class="fa-solid fa-user-plus text-xl"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-display font-bold text-xl text-gray-200 uppercase">VIDE — Aucun modérateur actuellement</h4>
+                            <p class="text-sm text-gray-400 max-w-sm mx-auto">
+                                Recrutement ouvert ! Vous souhaitez veiller au respect des règles et encadrer les parties sur SemtexFrance ?
+                            </p>
+                        </div>
+                        <div>
+                            <button onclick="openRecruitmentForRole('Modérateur')" class="inline-flex items-center gap-2 bg-tactical-card hover:bg-tactical-olive/30 border border-tactical-oliveLight/50 text-white font-display font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl text-sm transition-all cursor-pointer">
+                                <i class="fa-solid fa-file-signature text-tactical-amber"></i>
+                                <span>Postuler Modérateur</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HELPEURS (VIDE) -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-tactical-border pb-2">
+                        <h3 class="font-display font-bold text-2xl text-white uppercase">Helpeurs <span class="text-gray-500 text-lg font-mono">(VIDE)</span></h3>
+                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-400 font-mono text-xs">Recrutement Ouvert</span>
+                    </div>
+
+                    <div class="bg-tactical-surface/70 border-2 border-dashed border-tactical-border rounded-2xl p-8 text-center space-y-4">
+                        <div class="w-14 h-14 rounded-2xl bg-black/60 border border-tactical-border mx-auto flex items-center justify-center text-gray-500">
+                            <i class="fa-solid fa-headset text-xl"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-display font-bold text-xl text-gray-200 uppercase">VIDE — Aucun helpeur actuellement</h4>
+                            <p class="text-sm text-gray-400 max-w-sm mx-auto">
+                                Recrutement ouvert ! Rejoignez l'équipe pour accueillir les nouveaux joueurs PC, Xbox et PS5 et les guider sur le serveur.
+                            </p>
+                        </div>
+                        <div>
+                            <button onclick="openRecruitmentForRole('Helpeur')" class="inline-flex items-center gap-2 bg-tactical-card hover:bg-tactical-olive/30 border border-tactical-oliveLight/50 text-white font-display font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl text-sm transition-all cursor-pointer">
+                                <i class="fa-solid fa-file-signature text-tactical-amber"></i>
+                                <span>Postuler Helpeur</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- ONGLET : RECRUTEMENT STAFF (FORMULAIRE + WEBHOOK DISCORD)         -->
+        <!-- ================================================================= -->
+        <section id="tab-content-recruitment" class="tab-section hidden space-y-8">
+            <div class="max-w-4xl mx-auto space-y-6">
+                
+                <!-- En-tête Recrutement -->
+                <div class="bg-tactical-card border border-tactical-border rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1.5">
+                        <div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>Campagne de Recrutement Ouverte • Modérateur & Helpeur</span>
+                        </div>
+                        <h2 class="font-display font-extrabold text-3xl text-white uppercase">Rejoindre le Staff SemtexFrance</h2>
+                        <p class="text-sm text-gray-400">
+                            Remplissez soigneusement le dossier ci-dessous. Votre candidature et toutes vos réponses seront transmises directement à l'État-Major sur Discord.
+                        </p>
+                    </div>
+                    <div class="w-14 h-14 rounded-2xl bg-tactical-olive/25 border border-tactical-oliveLight/40 flex items-center justify-center shrink-0 text-tactical-amber">
+                        <i class="fa-solid fa-id-card-clip text-2xl"></i>
+                    </div>
+                </div>
+
+                <!-- Formulaire de Candidature -->
+                <div class="bg-tactical-card border border-tactical-border rounded-2xl p-6 sm:p-8 shadow-2xl">
+                    <form onsubmit="submitStaffRecruitment(event)" class="space-y-6">
+                        
+                        <!-- Poste visé -->
+                        <div class="space-y-1.5">
+                            <label for="rec-role" class="block text-xs font-mono text-gray-300 uppercase">
+                                <i class="fa-solid fa-medal text-tactical-amber mr-1.5"></i>Poste souhaité <span class="text-red-400">*</span>
+                            </label>
+                            <select id="rec-role" class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-3 text-sm text-white focus:border-tactical-amber focus:outline-none">
+                                <option value="Modérateur">Modérateur (Poste Vacant)</option>
+                                <option value="Helpeur">Helpeur (Poste Vacant)</option>
+                                <option value="Modérateur / Helpeur">Polyvalent (Modérateur / Helpeur)</option>
+                            </select>
+                        </div>
+
+                        <!-- Ligne Identité : Âge, Pseudo Discord, Pseudo Arma -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="space-y-1.5">
+                                <label for="rec-age" class="block text-xs font-mono text-gray-300 uppercase">
+                                    <i class="fa-solid fa-calendar-days text-tactical-cyan mr-1.5"></i>Âge <span class="text-red-400">*</span>
+                                </label>
+                                <input type="number" id="rec-age" required min="14" max="99" placeholder="Ex: 21" class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label for="rec-discord" class="block text-xs font-mono text-gray-300 uppercase">
+                                    <i class="fa-brands fa-discord text-[#5865F2] mr-1.5"></i>Pseudo Discord <span class="text-red-400">*</span>
+                                </label>
+                                <input type="text" id="rec-discord" required maxlength="50" placeholder="Ex: @soldat_fr ou ID Discord" class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none">
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label for="rec-arma" class="block text-xs font-mono text-gray-300 uppercase">
+                                    <i class="fa-solid fa-crosshairs text-tactical-oliveLight mr-1.5"></i>Pseudo Arma <span class="text-red-400">*</span>
+                                </label>
+                                <input type="text" id="rec-arma" required maxlength="50" placeholder="Votre pseudo en jeu" class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Motivations -->
+                        <div class="space-y-1.5">
+                            <label for="rec-motivations" class="block text-xs font-mono text-gray-300 uppercase">
+                                <i class="fa-solid fa-fire text-tactical-amber mr-1.5"></i>Vos Motivations <span class="text-red-400">*</span>
+                            </label>
+                            <textarea id="rec-motivations" required rows="4" maxlength="1000" placeholder="Présentez-vous, votre expérience sur Arma Reforger / MilSim et vos disponibilités..." class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none resize-none"></textarea>
+                        </div>
+
+                        <!-- Pourquoi devenir staff -->
+                        <div class="space-y-1.5">
+                            <label for="rec-why-staff" class="block text-xs font-mono text-gray-300 uppercase">
+                                <i class="fa-solid fa-shield-halved text-tactical-oliveLight mr-1.5"></i>Pourquoi devenir staff ? <span class="text-red-400">*</span>
+                            </label>
+                            <textarea id="rec-why-staff" required rows="3" maxlength="1000" placeholder="Qu'est-ce qui vous donne envie de rejoindre l'équipe d'administration de SemtexFrance ?" class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none resize-none"></textarea>
+                        </div>
+
+                        <!-- Pourquoi vous et pas un autre -->
+                        <div class="space-y-1.5">
+                            <label for="rec-why-you" class="block text-xs font-mono text-gray-300 uppercase">
+                                <i class="fa-solid fa-award text-tactical-cyan mr-1.5"></i>Pourquoi vous et pas un autre ? <span class="text-red-400">*</span>
+                            </label>
+                            <textarea id="rec-why-you" required rows="3" maxlength="1000" placeholder="Vos qualités, votre sang-froid, votre impartialité, ce que vous apporterez en plus..." class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none resize-none"></textarea>
+                        </div>
+
+                        <!-- Bouton de soumission -->
+                        <div class="pt-2">
+                            <button type="submit" id="rec-submit-btn" class="w-full bg-gradient-to-r from-tactical-amber to-amber-500 hover:from-tactical-amberHover hover:to-amber-400 text-black font-display font-extrabold text-xl uppercase tracking-wider py-4 px-6 rounded-2xl shadow-xl shadow-tactical-amber/20 flex items-center justify-center gap-3 transition-all active:scale-[0.99] cursor-pointer">
+                                <i class="fa-brands fa-discord text-2xl"></i>
+                                <span>Envoyer ma candidature au Staff</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- ONGLET 4 : AVIS JOUEURS (ÉTOILES + COMMENTAIRE + WEBHOOK DISCORD) -->
+        <!-- ================================================================= -->
+        <section id="tab-content-reviews" class="tab-section hidden space-y-8">
+            
+            <!-- En-tête & Note Globale -->
+            <div class="bg-tactical-card border border-tactical-border rounded-2xl p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div class="space-y-2">
+                    <div class="inline-flex items-center gap-2 text-xs font-mono text-tactical-amber uppercase">
+                        <i class="fa-solid fa-comments"></i>
+                        <span>Retours de la Communauté • Synchronisation Webhook Discord</span>
+                    </div>
+                    <h2 class="font-display font-extrabold text-3xl text-white uppercase">Avis des Joueurs SemtexFrance</h2>
+                    <p class="text-sm text-gray-400 max-w-2xl">
+                        Partagez votre expérience sur le serveur (PC, Xbox ou PS5). Chaque avis publié est affiché ici et transmis directement au staff sur Discord.
+                    </p>
+                </div>
+
+                <!-- Score moyen -->
+                <div class="bg-black/60 border border-tactical-amber/40 rounded-2xl px-6 py-4 flex items-center gap-5 shrink-0">
+                    <div class="text-center">
+                        <div id="reviews-avg-score" class="font-mono text-3xl sm:text-4xl font-extrabold text-white">5.0</div>
+                        <div class="text-[11px] font-mono text-gray-400 uppercase">sur 5.0</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div id="reviews-avg-stars" class="flex items-center gap-1 text-tactical-amber text-lg">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="text-xs font-mono text-gray-400">
+                            Basé sur <span id="reviews-total-count" class="text-white font-bold">3</span> avis joueurs
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Formulaire d'envoi d'avis (5 colonnes) -->
+                <div class="lg:col-span-5 bg-tactical-card border border-tactical-border rounded-2xl p-6 space-y-5 shadow-xl">
+                    <div class="border-b border-tactical-border pb-3">
+                        <h3 class="font-display font-bold text-2xl text-white uppercase flex items-center gap-2">
+                            <i class="fa-solid fa-pen-to-square text-tactical-amber"></i>
+                            <span>Laisser un avis</span>
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Votre avis sera envoyé automatiquement via Webhook Discord.</p>
+                    </div>
+
+                    <form onsubmit="submitPlayerReview(event)" class="space-y-4">
+                        <!-- Pseudo Discord -->
+                        <div class="space-y-1.5">
+                            <label for="review-discord-pseudo" class="block text-xs font-mono text-gray-300 uppercase">
+                                <i class="fa-brands fa-discord text-[#5865F2] mr-1"></i>Pseudo Discord <span class="text-red-400">*</span>
+                            </label>
+                            <input type="text" id="review-discord-pseudo" required maxlength="40" placeholder="Ex: Soldat_FR#0001 ou @soldat_fr" class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none">
+                        </div>
+
+                        <!-- Plateforme -->
+                        <div class="space-y-1.5">
+                            <label for="review-platform" class="block text-xs font-mono text-gray-300 uppercase">
+                                <i class="fa-solid fa-gamepad text-tactical-cyan mr-1"></i>Plateforme de jeu
+                            </label>
+                            <select id="review-platform" class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-2.5 text-sm text-white focus:border-tactical-amber focus:outline-none">
+                                <option value="PC (Steam)">PC (Steam)</option>
+                                <option value="Xbox Series X|S">Xbox Series X|S</option>
+                                <option value="PlayStation 5">PlayStation 5</option>
+                            </select>
+                        </div>
+
+                        <!-- Système d'étoiles interactif -->
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-mono text-gray-300 uppercase">
+                                Note du serveur <span class="text-red-400">*</span>
+                            </label>
+                            <div class="bg-black/70 border border-tactical-border rounded-xl px-4 py-3 flex items-center justify-between">
+                                <div class="flex items-center gap-2" id="star-rating-selector" onmouseleave="resetStarHover()">
+                                    <button type="button" onclick="setReviewRating(1)" onmouseenter="hoverReviewRating(1)" class="star-btn text-2xl text-tactical-amber transition-transform hover:scale-110 cursor-pointer" aria-label="1 étoile">
+                                        <i class="fa-solid fa-star"></i>
+                                    </button>
+                                    <button type="button" onclick="setReviewRating(2)" onmouseenter="hoverReviewRating(2)" class="star-btn text-2xl text-tactical-amber transition-transform hover:scale-110 cursor-pointer" aria-label="2 étoiles">
+                                        <i class="fa-solid fa-star"></i>
+                                    </button>
+                                    <button type="button" onclick="setReviewRating(3)" onmouseenter="hoverReviewRating(3)" class="star-btn text-2xl text-tactical-amber transition-transform hover:scale-110 cursor-pointer" aria-label="3 étoiles">
+                                        <i class="fa-solid fa-star"></i>
+                                    </button>
+                                    <button type="button" onclick="setReviewRating(4)" onmouseenter="hoverReviewRating(4)" class="star-btn text-2xl text-tactical-amber transition-transform hover:scale-110 cursor-pointer" aria-label="4 étoiles">
+                                        <i class="fa-solid fa-star"></i>
+                                    </button>
+                                    <button type="button" onclick="setReviewRating(5)" onmouseenter="hoverReviewRating(5)" class="star-btn text-2xl text-tactical-amber transition-transform hover:scale-110 cursor-pointer" aria-label="5 étoiles">
+                                        <i class="fa-solid fa-star"></i>
+                                    </button>
+                                </div>
+                                <span id="star-rating-label" class="font-mono text-xs font-bold text-tactical-amber">5 / 5 — Excellent</span>
+                            </div>
+                        </div>
+
+                        <!-- Commentaire -->
+                        <div class="space-y-1.5">
+                            <label for="review-comment" class="block text-xs font-mono text-gray-300 uppercase">
+                                Votre commentaire <span class="text-red-400">*</span>
+                            </label>
+                            <textarea id="review-comment" required rows="4" maxlength="600" placeholder="Décrivez votre expérience sur SemtexFrance (ambiance, mods, fluidité, staff...)" class="w-full bg-black/70 border border-tactical-border rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-tactical-amber focus:outline-none resize-none"></textarea>
+                        </div>
+
+                        <!-- Bouton d'envoi -->
+                        <button type="submit" id="review-submit-btn" class="w-full bg-tactical-amber hover:bg-tactical-amberHover text-black font-display font-extrabold text-lg uppercase tracking-wider py-3.5 px-5 rounded-xl shadow-lg shadow-tactical-amber/20 flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer">
+                            <i class="fa-brands fa-discord text-lg"></i>
+                            <span>Publier & Envoyer sur Discord</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Liste des avis publiés (7 colonnes) -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="flex items-center justify-between border-b border-tactical-border pb-2">
+                        <h3 class="font-display font-bold text-2xl text-white uppercase">Derniers avis de la communauté</h3>
+                        <span class="text-xs font-mono text-gray-400">Triés du plus récent au plus ancien</span>
+                    </div>
+
+                    <div id="reviews-list" class="space-y-4">
+                        <!-- Généré dynamiquement par JS -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- ONGLET 5 : DONATION PAYPAL                                        -->
+        <!-- ================================================================= -->
+        <section id="tab-content-donate" class="tab-section hidden space-y-8">
+            
+            <div class="max-w-4xl mx-auto space-y-8">
+                <!-- Carte Principale PayPal -->
+                <div class="bg-gradient-to-br from-tactical-card via-tactical-surface to-black border border-tactical-border rounded-2xl p-6 sm:p-10 shadow-2xl space-y-8">
+                    
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-tactical-border pb-6">
+                        <div class="space-y-1">
+                            <div class="inline-flex items-center gap-2 text-xs font-mono text-[#3b9ae1] uppercase">
+                                <i class="fa-brands fa-paypal"></i>
+                                <span>Soutien Communautaire Sécurisé</span>
+                            </div>
+                            <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white uppercase">Soutenir SemtexFrance via PayPal</h2>
+                            <p class="text-sm text-gray-400">
+                                Chaque contribution aide directement au financement de notre serveur dédié haute performance.
+                            </p>
+                        </div>
+                        <div class="w-16 h-16 rounded-2xl bg-[#0070ba]/20 border border-[#0070ba]/50 flex items-center justify-center shrink-0">
+                            <i class="fa-brands fa-paypal text-[#3b9ae1] text-3xl"></i>
+                        </div>
+                    </div>
+
+                    <!-- Sélection du montant -->
+                    <div class="space-y-4">
+                        <label class="block font-display font-bold text-lg text-white uppercase">1. Choisissez un montant de soutien (€)</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                            <button type="button" onclick="selectDonationAmount(5)" class="donation-amt-btn py-3.5 px-4 rounded-xl font-mono font-bold text-lg bg-tactical-bg border border-tactical-border text-gray-300 hover:border-[#3b9ae1] transition-all cursor-pointer">5 €</button>
+                            <button type="button" onclick="selectDonationAmount(10)" class="donation-amt-btn active py-3.5 px-4 rounded-xl font-mono font-bold text-lg bg-[#0070ba] border border-[#3b9ae1] text-white shadow-lg shadow-[#0070ba]/30 transition-all cursor-pointer">10 €</button>
+                            <button type="button" onclick="selectDonationAmount(20)" class="donation-amt-btn py-3.5 px-4 rounded-xl font-mono font-bold text-lg bg-tactical-bg border border-tactical-border text-gray-300 hover:border-[#3b9ae1] transition-all cursor-pointer">20 €</button>
+                            <button type="button" onclick="selectDonationAmount(50)" class="donation-amt-btn py-3.5 px-4 rounded-xl font-mono font-bold text-lg bg-tactical-bg border border-tactical-border text-gray-300 hover:border-[#3b9ae1] transition-all cursor-pointer">50 €</button>
+                            <div class="col-span-2 sm:col-span-1 relative">
+                                <input type="number" id="custom-donation-input" min="1" max="1000" value="10" oninput="setCustomDonationAmount(this.value)" placeholder="Libre" class="w-full h-full py-3.5 px-3 rounded-xl font-mono font-bold text-lg bg-black border border-tactical-border text-white text-center focus:border-[#3b9ae1] focus:outline-none">
+                <a href="https://discord.gg/YdpE2wCnaK" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1.5">
+                    <i class="fa-brands fa-discord text-[#5865F2] text-lg"></i>
+                    <span>Discord Officiel</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Conteneur de notifications Toast -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- ===================================================================== -->
+    <!-- SCRIPTS INTERACTIFS (CONFIG, ONGLETS, 49 MODS, AVIS, RECRUTEMENT)     -->
+    <!-- ===================================================================== -->
+    <script>
+        // ==========================================
+        // 1. CONFIGURATION GLOBALE VERROUILLÉE
+        // ==========================================
+        const CONFIG = {
+            FULL_SERVER_NAME: "[FR] SemtexFrance / communauté ex OpexFrance / PC XBOX PS",
+            PAYPAL_URL: "https://paypal.me/FranceSemTex",
+            DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/1575278055583121669/pI4kQ0AE55KRX2l0fMdzRTmnn5DEpg3lLofR7wVo9C_g1kcSrH-7h6NyfurKRPJHiu43",
+            RECRUITMENT_WEBHOOK_URL: "https://discord.com/api/webhooks/1575281864657080562/bufpoO40GqurlTJfmGloMPfAe4FKwfknLbwBKZdoSadolYW6lwq-iR85zedvqtEBuLGv",
+            MODS: [
+                { modId: "6A1E0D2C9B4F7A31", name: "ArmaReplay", category: "Scripts & UI" },
+                { modId: "6A6EA6AD906D8C12", name: "Reforgedmin - Admin Tools", category: "Scripts & UI" },
+                { modId: "6550CDE61DD51E14", name: "Novka", category: "Core & Terrain" },
+                { modId: "615CC2D870A39838", name: "WCS_Arsenal", category: "Armes & WCS" },
+                { modId: "5965550F24A0C152", name: "Where Am I", category: "Scripts & UI" },
+                { modId: "697AEA9D9CC89A0A", name: "MBS Rank save", category: "Scripts & UI" },
+                { modId: "65D74B6B78919007", name: "Modern Combat Gear", category: "Tenues & Équipements" },
+                { modId: "65A95B96F3820A62", name: "G3 Combat Uniforms by Groch", category: "Tenues & Équipements" },
+                { modId: "1337C0DE5DABBEEF", name: "RHS - Content Pack 01", category: "Core & Terrain" },
+                { modId: "BADC0DEDABBEDA5E", name: "RHS - Content Pack 02", category: "Core & Terrain" },
+                { modId: "595F2BF2F44836FB", name: "RHS - Status Quo", category: "Core & Terrain" },
+                { modId: "3B8081D9CAD979D2", name: "WCS_RHS_Scopes", category: "Armes & WCS" },
+                { modId: "6152CB0BD0684837", name: "WCS_Clothing", category: "Tenues & Équipements" },
+                { modId: "615806DC6C57AF02", name: "WCS_NATO", category: "Armes & WCS" },
+                { modId: "615818DA7C0343FD", name: "WCS_RU", category: "Armes & WCS" },
+                { modId: "61C74A8B647617DA", name: "WCS_Attachments", category: "Armes & WCS" },
+                { modId: "61D57616CAFBB23D", name: "WCS_LoadoutEditor", category: "Scripts & UI" },
+                { modId: "61E42AE6714A3CC2", name: "WCS_Armbands", category: "Tenues & Équipements" },
+                { modId: "629B2BA37EFFD577", name: "WCS_Armaments", category: "Armes & WCS" },
+                { modId: "62A668F513428630", name: "WCS_Scopes", category: "Armes & WCS" },
+                { modId: "631C3C1AEE9C90BC", name: "WCS_Sounds", category: "Armes & WCS" },
+                { modId: "64610AFB74AA9842", name: "WCS_Core", category: "Core & Terrain" },
+                { modId: "65CF7AE8574E06D2", name: "WCS_Weapons", category: "Armes & WCS" },
+                { modId: "65F929DF622BAD50", name: "WCS_RHS_Weapons", category: "Armes & WCS" },
+                { modId: "6602C1EC7E5A4A87", name: "WCS_Clothing_Assets", category: "Tenues & Équipements" },
+                { modId: "68F006D910E7546F", name: "WCS_Weapon_Scripts", category: "Armes & WCS" },
+                { modId: "6A717EEA63A35E67", name: "WCS_RHS_Attachments", category: "Armes & WCS" },
+                { modId: "5D0551624969C92E", name: "Zeliks Character", category: "Tenues & Équipements" },
+                { modId: "606B100247F5C709", name: "Bacon Loadout Editor", category: "Scripts & UI" },
+                { modId: "6AAE2A3269AD5C39", name: "WCS_RHS_Sounds", category: "Armes & WCS" },
+                { modId: "6AAEEB19367529A1", name: "WCS_RHS_Clothing", category: "Tenues & Équipements" },
+                { modId: "6A0F2307495F9080", name: "uNLIMITED sTAMINA", category: "Scripts & UI" },
+                { modId: "663B2784961621FB", name: "VT4 - FRM", category: "Véhicules & Artillerie" },
+                { modId: "6982759627274E1C", name: "MBS save all in arsenal", category: "Scripts & UI" },
+                { modId: "5B0D1E4380971EBD", name: "COALITION Squad Interface", category: "Scripts & UI" },
+                { modId: "6A064BEB74933384", name: "VPP Savezone", category: "Scripts & UI" },
+                { modId: "612F512CD4CB21D5", name: "WCS_Earplugs", category: "Scripts & UI" },
+                { modId: "6858992BB34FC1B0", name: "WHAT- Auto Earplugs", category: "Scripts & UI" },
+                { modId: "6A321411EE790904", name: "BUSHWAR ZU-23-2", category: "Véhicules & Artillerie" },
+                { modId: "686AC479236F235D", name: "M777 Howitzer Artillery", category: "Véhicules & Artillerie" },
+                { modId: "6A84EA6A6EA6A986", name: "vPad Patched", category: "Scripts & UI" },
+                { modId: "6694AB75FFF60C71", name: "PLG Parachutes", category: "Tenues & Équipements" },
+                { modId: "690F67E53E6EDB09", name: "BFS - F.R.I.E.S Reforged", category: "Scripts & UI" },
+                { modId: "68CF5D435EF12A56", name: "KDA STATS", category: "Scripts & UI" },
+                { modId: "61B84088181A8FA4", name: "Motorbike", category: "Véhicules & Artillerie" },
+                { modId: "61BA4EB5C886D396", name: "WCS_VehicleLock", category: "Véhicules & Artillerie" },
+                { modId: "65B60A48AEC31157", name: "WCS_FMTV", category: "Véhicules & Artillerie" },
+                { modId: "6503091A7B264FC3", name: "WCS_Motorbikes", category: "Véhicules & Artillerie" },
+                { modId: "615A80027C5C9170", name: "WCS_Vehicles", category: "Véhicules & Artillerie" }
+            ]
+        };
+
+        // ==========================================
+        // 7. RECRUTEMENT STAFF (WEBHOOK DISCORD)
+        // ==========================================
+        function openRecruitmentForRole(roleName) {
+            switchTab('recruitment');
+            const selectEl = document.getElementById('rec-role');
+            if (selectEl) {
+                selectEl.value = roleName;
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function formatDiscordMention(input) {
+            const clean = input.trim();
+            // Si l'utilisateur saisit un ID numérique Discord (17 à 20 chiffres), on crée une vraie mention <@ID>
+            if (/^\d{17,20}$/.test(clean)) {
+                return `<@${clean}>`;
+            }
+            // Sinon on s'assure que le pseudo est précédé de @ pour le mentionner clairement
+            return clean.startsWith('@') ? clean : `@${clean}`;
+        }
+
+        async function submitStaffRecruitment(e) {
+            e.preventDefault();
+
+            const roleEl = document.getElementById('rec-role');
+            const ageEl = document.getElementById('rec-age');
+            const discordEl = document.getElementById('rec-discord');
+            const armaEl = document.getElementById('rec-arma');
+            const motivationsEl = document.getElementById('rec-motivations');
+            const whyStaffEl = document.getElementById('rec-why-staff');
+            const whyYouEl = document.getElementById('rec-why-you');
+            const submitBtn = document.getElementById('rec-submit-btn');
+
+            const role = roleEl.value;
+            const age = ageEl.value.trim();
+            const discordRaw = discordEl.value.trim();
+            const arma = armaEl.value.trim();
+            const motivations = motivationsEl.value.trim();
+            const whyStaff = whyStaffEl.value.trim();
+            const whyYou = whyYouEl.value.trim();
+
+            if (!age || !discordRaw || !arma || !motivations || !whyStaff || !whyYou) return;
+
+            const discordMention = formatDiscordMention(discordRaw);
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xl"></i><span>Transmission au staff en cours...</span>';
+
+            const payload = {
+                username: "SemtexFrance • Recrutement Staff",
+                content: `📋 **Nouvelle candidature Staff reçue !** Candidat : ${discordMention} (**${role}**)`,
+                embeds: [
+                    {
+                        title: `Candidature ${role} — ${arma}`,
+                        color: 0xe08b1b,
+                        fields: [
+                            {
+                                name: "👤 Pseudo Discord",
+                                value: `${discordMention} (\`${discordRaw}\`)`,
+                                inline: true
+                            },
+                            {
+                                name: "🎯 Pseudo Arma",
+                                value: arma,
+                                inline: true
+                            },
+                            {
+                                name: "🎂 Âge",
+                                value: `${age} ans`,
+                                inline: true
+                            },
+                            {
+                                name: "🔥 Motivations",
+                                value: motivations.slice(0, 1024),
+                                inline: false
+                            },
+                            {
+                                name: "🛡️ Pourquoi devenir staff ?",
+                                value: whyStaff.slice(0, 1024),
+                                inline: false
+                            },
+                            {
+                                name: "⭐ Pourquoi vous et pas un autre ?",
+                                value: whyYou.slice(0, 1024),
+                                inline: false
+                            }
+                        ],
+                        footer: {
+                            text: "SemtexFrance (ex OpexFrance) • Système de Recrutement"
+                        },
+                        timestamp: new Date().toISOString()
+                    }
+                ]
+            };
+
+            try {
+                const res = await fetch(CONFIG.RECRUITMENT_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    showToast('Candidature envoyée avec succès au staff sur Discord !', 'success');
+                    ageEl.value = '';
+                    discordEl.value = '';
+                    armaEl.value = '';
+                    motivationsEl.value = '';
+                    whyStaffEl.value = '';
+                    whyYouEl.value = '';
+                } else {
+                    showToast('Erreur lors de l’envoi vers Discord. Réessayez plus tard.', 'error');
+                }
+            } catch (_) {
+                showToast('Impossible de contacter le Webhook Discord.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-brands fa-discord text-2xl"></i><span>Envoyer ma candidature au Staff</span>';
+            }
+        }
+
+        // ==========================================
+        // 8. DONATION PAYPAL
+        // ==========================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-emerald-950/95 border-emerald-500/50 text-emerald-200',
+                error: 'bg-red-950/95 border-red-500/50 text-red-200',
+                info: 'bg-tactical-card/95 border-tactical-amber/50 text-gray-100'
+            };
+            const icons = {
+                success: 'fa-circle-check text-emerald-400',
+                error: 'fa-circle-exclamation text-red-400',
+                info: 'fa-circle-info text-tactical-amber'
+            };
+            toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border shadow-xl backdrop-blur-md text-xs sm:text-sm font-medium transition-all duration-300 ${colors[type] || colors.info}`;
+            toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-base"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // ==========================================
+        // 2. NAVIGATION PAR ONGLETS
+        // ==========================================
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-section').forEach(sec => sec.classList.add('hidden'));
+            const target = document.getElementById(`tab-content-${tabName}`);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-tactical-amber', 'text-black', 'shadow-md', 'shadow-tactical-amber/20');
+                btn.classList.add('bg-tactical-card', 'text-gray-300', 'border', 'border-tactical-border');
+            });
+
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-tactical-card', 'text-gray-300', 'border', 'border-tactical-border');
+                activeBtn.classList.add('active', 'bg-tactical-amber', 'text-black', 'shadow-md', 'shadow-tactical-amber/20');
+            }
+        }
+
+        // ==========================================
+        // 3. COPIE DU NOM EXACT DU SERVEUR (SANS IP)
+        // ==========================================
+        function copyTextFallback(text, successMsg) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => showToast(successMsg, 'success')).catch(() => {
+                    execCopy(text, successMsg);
+                });
+            } else {
+                execCopy(text, successMsg);
+            }
+        }
+
+        function execCopy(text, successMsg) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMsg, 'success');
+            } catch (_) {
+                showToast('Impossible de copier automatiquement.', 'error');
+            }
+            document.body.removeChild(ta);
+        }
+
+        function copyServerName() {
+            copyTextFallback(CONFIG.FULL_SERVER_NAME, 'Nom exact du serveur copié ! Collez-le dans Arma Reforger.');
+        }
+
+        // ==========================================
+        // 4. CATALOGUE DES 49 MODS
+        // ==========================================
+        let selectedModCategory = 'ALL';
+
+        function setModCategory(cat) {
+            selectedModCategory = cat;
+            document.querySelectorAll('.mod-cat-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.classList.remove('bg-tactical-card', 'text-gray-300', 'border', 'border-tactical-border');
+                    btn.classList.add('active', 'bg-tactical-amber', 'text-black');
+                } else {
+                    btn.classList.remove('active', 'bg-tactical-amber', 'text-black');
+                    btn.classList.add('bg-tactical-card', 'text-gray-300', 'border', 'border-tactical-border');
+                }
+            });
+            renderMods();
+        }
+
+        function copySingleModId(modId, modName) {
+            copyTextFallback(modId, `ID copié : ${modName} (${modId})`);
+        }
+
+        function copyModsJson() {
+            const jsonStr = JSON.stringify(CONFIG.MODS.map(({ modId, name }) => ({ modId, name })), null, 2);
+            copyTextFallback(jsonStr, 'JSON des 49 mods copié dans le presse-papiers !');
+        }
+
+        function renderMods() {
+            const grid = document.getElementById('mods-grid');
+            const searchInput = document.getElementById('mod-search-input');
+            const totalCountEl = document.getElementById('mods-total-count');
+            const navBadgeEl = document.getElementById('nav-mods-badge');
+            if (!grid) return;
+
+            const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+            const filtered = CONFIG.MODS.filter(m => {
+                const matchCat = selectedModCategory === 'ALL' || m.category === selectedModCategory;
+                const matchQuery = !query || m.name.toLowerCase().includes(query) || m.modId.toLowerCase().includes(query);
+                return matchCat && matchQuery;
+            });
+
+            if (totalCountEl) totalCountEl.textContent = CONFIG.MODS.length;
+            if (navBadgeEl) navBadgeEl.textContent = CONFIG.MODS.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full bg-tactical-card border border-tactical-border rounded-2xl p-8 text-center text-gray-400 font-mono text-sm">Aucun mod trouvé pour votre recherche.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map((mod, index) => `
+                <div class="bg-tactical-card border border-tactical-border hover:border-tactical-amber/50 rounded-2xl p-4 flex flex-col justify-between gap-3 transition-all group">
+                    <div class="flex items-start justify-between gap-2">
+                        <div class="space-y-1 min-w-0">
+                            <span class="inline-block px-2 py-0.5 rounded bg-black/60 border border-tactical-border text-[10px] font-mono text-tactical-oliveLight uppercase">
+                                ${escapeHtml(mod.category)}
+                            </span>
+                            <h3 class="font-display font-bold text-lg text-white truncate group-hover:text-tactical-amber transition-colors" title="${escapeHtml(mod.name)}">
+                                ${escapeHtml(mod.name)}
+                            </h3>
+                        </div>
+                        <span class="text-xs font-mono text-gray-500 shrink-0">#${index + 1}</span>
+                    </div>
+
+                    <div class="flex items-center justify-between bg-black/50 border border-tactical-border/70 rounded-xl px-3 py-2 font-mono text-xs">
+                        <span class="text-gray-400 truncate">ID: <strong class="text-gray-200">${escapeHtml(mod.modId)}</strong></span>
+                        <button onclick="copySingleModId('${escapeHtml(mod.modId)}', '${escapeHtml(mod.name).replace(/'/g, "\\'")}')" class="text-gray-400 hover:text-tactical-amber transition-colors ml-2 cursor-pointer" title="Copier l'ID du mod">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // 6. SYSTÈME D'AVIS & WEBHOOK DISCORD
+        // ==========================================
+        let currentReviewRating = 5;
+
+        const DEFAULT_REVIEWS = [
+            {
+                id: 1,
+                discord: "Kyllian_FR",
+                platform: "PC (Steam)",
+                rating: 5,
+                comment: "Super serveur français ! Le modpack WCS + RHS tourne super bien sur Novka, bonne ambiance tactique en escouade et staff très réactif.",
+                date: "Il y a 2 jours",
+                webhookSent: true
+            },
+            {
+                id: 2,
+                discord: "Ghost_Xbox",
+                platform: "Xbox Series X|S",
+                rating: 5,
+                comment: "Enfin un serveur FR crossplay fluide sur Xbox Series X avec de vrais équipements modernes et une communauté accueillante.",
+                date: "Il y a 4 jours",
+                webhookSent: true
+            },
+            {
+                id: 3,
+                discord: "Valkyrie_PS5",
+                platform: "PlayStation 5",
+                rating: 5,
+                comment: "Téléchargement des mods nickel en suivant les 20 Go recommandés. De grosses opérations le soir avec une super cohésion !",
+                date: "Il y a 1 semaine",
+                webhookSent: true
+            }
+        ];
+
+        function loadReviews() {
+            try {
+                const saved = localStorage.getItem('semtexfrance_reviews');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                }
+            } catch (_) {}
+            return [...DEFAULT_REVIEWS];
+        }
+
+        let playerReviews = loadReviews();
+
+        function saveReviews() {
+            try {
+                localStorage.setItem('semtexfrance_reviews', JSON.stringify(playerReviews));
+            } catch (_) {}
+        }
+
+        function getActiveWebhookUrl() {
+            return (CONFIG.DISCORD_WEBHOOK_URL || '').trim();
+        }
+
+        const RATING_LABELS = {
+            1: "1 / 5 — Décevant",
+            2: "2 / 5 — Moyen",
+            3: "3 / 5 — Correct",
+            4: "4 / 5 — Très bien",
+            5: "5 / 5 — Excellent"
+        };
+
+        function updateStarButtonsUI(activeCount) {
+            const buttons = document.querySelectorAll('#star-rating-selector .star-btn');
+            buttons.forEach((btn, idx) => {
+                if (idx < activeCount) {
+                    btn.classList.remove('text-gray-600');
+                    btn.classList.add('text-tactical-amber');
+                } else {
+                    btn.classList.remove('text-tactical-amber');
+                    btn.classList.add('text-gray-600');
+                }
+            });
+            const label = document.getElementById('star-rating-label');
+            if (label) label.textContent = RATING_LABELS[activeCount] || RATING_LABELS[5];
+        }
+
+        function hoverReviewRating(star) {
+            updateStarButtonsUI(star);
+        }
+
+        function resetStarHover() {
+            updateStarButtonsUI(currentReviewRating);
+        }
+
+        function setReviewRating(star) {
+            currentReviewRating = star;
+            updateStarButtonsUI(star);
+        }
+
+        function renderStarsHtml(rating) {
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    html += '<i class="fa-solid fa-star text-tactical-amber"></i>';
+                } else {
+                    html += '<i class="fa-regular fa-star text-gray-600"></i>';
+                }
+            }
+            return html;
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function renderReviews() {
+            const listEl = document.getElementById('reviews-list');
+            const totalEl = document.getElementById('reviews-total-count');
+            const navBadge = document.getElementById('nav-reviews-badge');
+            const avgScoreEl = document.getElementById('reviews-avg-score');
+            const avgStarsEl = document.getElementById('reviews-avg-stars');
+
+            if (!listEl) return;
+
+            const count = playerReviews.length;
+            const sum = playerReviews.reduce((acc, r) => acc + (Number(r.rating) || 5), 0);
+            const avg = count > 0 ? (sum / count).toFixed(1) : "5.0";
+
+            if (totalEl) totalEl.textContent = count;
+            if (navBadge) navBadge.textContent = count;
+            if (avgScoreEl) avgScoreEl.textContent = avg;
+            if (avgStarsEl) avgStarsEl.innerHTML = renderStarsHtml(Math.round(Number(avg)));
+
+            listEl.innerHTML = playerReviews.map(rev => `
+                <div class="bg-tactical-card border border-tactical-border hover:border-tactical-amber/40 rounded-2xl p-5 space-y-3 transition-all">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#8ea1e1] shrink-0">
+                                <i class="fa-brands fa-discord text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="font-display font-bold text-lg text-white leading-none">${escapeHtml(rev.discord)}</div>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] font-mono text-gray-400">
+                                    <span class="text-tactical-cyan">${escapeHtml(rev.platform || 'PC / Console')}</span>
+                                    <span>•</span>
+                                    <span>${escapeHtml(rev.date || "À l'instant")}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-1 text-sm bg-black/50 border border-tactical-border px-3 py-1.5 rounded-xl">
+                                ${renderStarsHtml(rev.rating)}
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed bg-black/30 border border-tactical-border/50 rounded-xl p-3.5">
+                        "${escapeHtml(rev.comment)}"
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        async function sendReviewToDiscordWebhook(review) {
+            const webhookUrl = getActiveWebhookUrl();
+            if (!webhookUrl) return { sent: false, reason: 'NO_WEBHOOK' };
+
+            const starsText = '⭐'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+            const embedColor = review.rating >= 4 ? 0x22c55e : (review.rating === 3 ? 0xe08b1b : 0xef4444);
+
+            const payload = {
+                username: "SemtexFrance • Avis Joueurs",
+                embeds: [
+                    {
+                        title: `Nouvel avis joueur (${review.rating}/5)`,
+                        description: review.comment,
+                        color: embedColor,
+                        fields: [
+                            {
+                                name: "Pseudo Discord",
+                                value: review.discord,
+                                inline: true
+                            },
+                            {
+                                name: "Note",
+                                value: `${starsText} (**${review.rating}/5**)`,
+                                inline: true
+                            },
+                            {
+                                name: "Plateforme",
+                                value: review.platform,
+                                inline: true
+                            }
+                        ],
+                        footer: {
+                            text: "SemtexFrance (ex OpexFrance) • Arma Reforger"
+                        },
+                        timestamp: new Date().toISOString()
+                    }
+                ]
+            };
+
+            try {
+                const res = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                return { sent: res.ok };
+            } catch (err) {
+                return { sent: false, reason: 'NETWORK_ERROR' };
+            }
+        }
+
+        async function submitPlayerReview(e) {
+            e.preventDefault();
+            const discordInput = document.getElementById('review-discord-pseudo');
+            const platformInput = document.getElementById('review-platform');
+            const commentInput = document.getElementById('review-comment');
+            const submitBtn = document.getElementById('review-submit-btn');
+
+            const discord = discordInput.value.trim();
+            const platform = platformInput.value;
+            const comment = commentInput.value.trim();
+
+            if (!discord || !comment) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Envoi en cours...</span>';
+
+            const newReview = {
+                id: Date.now(),
+                discord,
+                platform,
+                rating: currentReviewRating,
+                comment,
+                date: "À l'instant"
+            };
+
+            const webhookResult = await sendReviewToDiscordWebhook(newReview);
+            newReview.webhookSent = webhookResult.sent;
+
+            playerReviews.unshift(newReview);
+            saveReviews();
+            renderReviews();
+
+            discordInput.value = '';
+            commentInput.value = '';
+            setReviewRating(5);
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-brands fa-discord text-lg"></i><span>Publier & Envoyer sur Discord</span>';
+
+            if (webhookResult.sent) {
+                showToast('Merci ! Votre avis a été publié et envoyé sur Discord.', 'success');
+            } else if (webhookResult.reason === 'NO_WEBHOOK') {
+                showToast('Avis publié sur le site ! (Pensez à renseigner votre URL Webhook Discord).', 'info');
+            } else {
+                showToast('Avis publié sur le site (vérifiez l’URL du Webhook Discord).', 'info');
+            }
+        }
+
+        // ==========================================
+        // 7. DONATION PAYPAL
+        // ==========================================
+        let selectedDonation = 10;
+
+        function selectDonationAmount(amount) {
+            selectedDonation = amount;
+            document.getElementById('custom-donation-input').value = amount;
+            
+            document.querySelectorAll('.donation-amt-btn').forEach(btn => {
+                const btnVal = parseInt(btn.textContent, 10);
+                if (btnVal === amount) {
+                    btn.classList.remove('bg-tactical-bg', 'text-gray-300', 'border-tactical-border');
+                    btn.classList.add('bg-[#0070ba]', 'border-[#3b9ae1]', 'text-white', 'shadow-lg', 'shadow-[#0070ba]/30');
+                } else {
+                    btn.classList.remove('bg-[#0070ba]', 'border-[#3b9ae1]', 'text-white', 'shadow-lg', 'shadow-[#0070ba]/30');
+                    btn.classList.add('bg-tactical-bg', 'text-gray-300', 'border-tactical-border');
+                }
+            });
+
+            updatePayPalLink();
+        }
+
+        function setCustomDonationAmount(val) {
+            const parsed = Math.max(1, parseInt(val, 10) || 1);
+            selectedDonation = parsed;
+            document.querySelectorAll('.donation-amt-btn').forEach(btn => {
+                btn.classList.remove('bg-[#0070ba]', 'border-[#3b9ae1]', 'text-white', 'shadow-lg', 'shadow-[#0070ba]/30');
+                btn.classList.add('bg-tactical-bg', 'text-gray-300', 'border-tactical-border');
+            });
+            updatePayPalLink();
+        }
+
+        function updatePayPalLink() {
+            const baseUrl = (CONFIG.PAYPAL_URL || 'https://paypal.me/FranceSemTex').trim().replace(/\/+$/, '');
+            const ctaBtn = document.getElementById('paypal-donate-cta');
+            const label = document.getElementById('cta-amount-label');
+
+            if (label) label.textContent = `${selectedDonation} €`;
+            if (ctaBtn) ctaBtn.href = `${baseUrl}/${selectedDonation}EUR`;
+        }
+
+        // ==========================================
+        // 8. INITIALISATION & BOUCLE TEMPS RÉEL (15s)
+        // ==========================================
+        // 8. INITIALISATION
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('top-server-name-display').textContent = CONFIG.FULL_SERVER_NAME;
+            
+            renderMods();
+            renderReviews();
+            updatePayPalLink();
+        });
+    </script>
+</body>
+</html>
